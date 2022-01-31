@@ -26,6 +26,9 @@
 
         <!-- === Main dependencies ================================= -->
 
+        <lombok.version>1.18.22</lombok.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+
         <!-- === Test dependencies ================================= -->
 
         <cucumber.version>7.2.3</cucumber.version>
@@ -40,6 +43,15 @@
     <dependencies>
 
         <!-- === Main dependencies ================================= -->
+
+        <!-- Lombok -->
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <optional>true</optional>
+        </dependency>
 
         <!-- === Test dependencies ================================= -->
 
