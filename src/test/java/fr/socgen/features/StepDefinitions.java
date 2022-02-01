@@ -29,6 +29,12 @@ public class StepDefinitions {
     accountApplication.deposit(customer, account, amount);
   }
 
+  @When("{string} withdraws {int} € from account {string}")
+  public void when_customers_withdraws_money_from_account(
+      String customer, int amount, String account) {
+    accountApplication.withdraw(customer, account, amount);
+  }
+
   @Then("the account {string} has a balance of {int} €")
   public void then_the_balance_of_account_is_equal_to(String accountNumber, int balance) {
     assertEquals(

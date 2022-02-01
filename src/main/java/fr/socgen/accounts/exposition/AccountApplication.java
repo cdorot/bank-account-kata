@@ -20,4 +20,8 @@ public class AccountApplication {
   public void deposit(String customer, String account, int amount) {
     accountService.deposit(customer, account, amount);
   }
+
+  public void withdraw(String customer, String account, int amount) {
+    accountService.withdraw(customer, account, amount);
+  }
 }

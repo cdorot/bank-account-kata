@@ -19,4 +19,9 @@ public class AccountSpiImpl implements AccountSpi {
   public void deposit(String customer, String account, int amount) {
     accountRepository.addOperation(account, amount);
   }
+
+  @Override
+  public void withdraw(String customer, String account, int amount) {
+    accountRepository.addOperation(account, -amount);
+  }
 }

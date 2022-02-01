@@ -13,10 +13,20 @@ public class AccountService {
   }
 
   public void deposit(String customer, String account, int amount) {
+    requirePositiveNumber(amount);
+
+    accountSpi.deposit(customer, account, amount);
+  }
+
+  public void withdraw(String customer, String account, int amount) {
+    requirePositiveNumber(amount);
+
+    accountSpi.withdraw(customer, account, amount);
+  }
+
+  private void requirePositiveNumber(int amount) {
     if (amount <= 0) {
       throw new IllegalArgumentException("The amount to deposit must be positive !");
     }
-
-    accountSpi.deposit(customer, account, amount);
   }
 }
