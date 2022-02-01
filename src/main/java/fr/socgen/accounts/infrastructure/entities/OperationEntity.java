@@ -12,5 +12,5 @@ import java.time.LocalDateTime;
 public class OperationEntity {
 
   private LocalDateTime dateTime;
-  private long amount;
+  private long amount = 0L;
 }

@@ -1,11 +1,15 @@
 package fr.socgen.accounts.infrastructure.repositories;
 
 import fr.socgen.accounts.infrastructure.entities.AccountEntity;
+import fr.socgen.accounts.infrastructure.entities.AccountStatementEntity;
 import fr.socgen.accounts.infrastructure.entities.OperationEntity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class AccountRepository {
 
@@ -19,10 +23,8 @@ public class AccountRepository {
     accountEntities.clear();
   }
 
-  public void addAccount(String accountNumber, String holder, int initialDeposit) {
-    if (accountEntities.containsKey(accountNumber)) {
-      throw new IllegalArgumentException("Account " + accountNumber + " already exists !");
-    }
+  public void addAccount(String accountNumber, String holder, long initialDeposit) {
+    requireAccountDoesNotExists(accountNumber);
 
     final AccountEntity accountEntity =
         new AccountEntity().setNumber(accountNumber).setHolder(holder);
@@ -35,7 +37,7 @@ public class AccountRepository {
     accountEntities.put(accountNumber, accountEntity);
   }
 
-  public void addOperation(String accountNumber, int amount) {
+  public void addOperation(String accountNumber, long amount) {
     accountEntities
         .get(accountNumber)
         .addOperation(new OperationEntity().setAmount(amount).setDateTime(LocalDateTime.now()));
@@ -45,7 +47,25 @@ public class AccountRepository {
     return accountEntities.get(accountNumber);
   }
 
+  public List<OperationEntity> getOperationsPerformedBeforeDate(
+      String accountNumber, LocalDate date) {
+    return accountEntities.get(accountNumber).getOperations().stream()
+        .filter(operationEntity -> operationEntity.getDateTime().isBefore(date.atStartOfDay()))
+        .collect(Collectors.toList());
+  }
+
+  public void addAccountStatement(
+      String accountNumber, AccountStatementEntity accountStatementEntity) {
+    accountEntities.get(accountNumber).addStatement(accountStatementEntity);
+  }
+
   public static AccountRepository getInstance() {
     return instance;
+  }
+
+  private void requireAccountDoesNotExists(String accountNumber) {
+    if (accountEntities.containsKey(accountNumber)) {
+      throw new IllegalArgumentException("Account " + accountNumber + " already exists !");
+    }
   }
 }
