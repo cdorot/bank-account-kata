@@ -3,7 +3,7 @@ package fr.socgen.features;
 import fr.socgen.accounts.exposition.AccountApplication;
 import fr.socgen.accounts.infrastructure.entities.OperationEntity;
 import fr.socgen.accounts.infrastructure.repositories.AccountRepository;
-import fr.socgen.features.utils.AccountStatementData;
+import fr.socgen.features.utils.AccountStatementOperationData;
 import fr.socgen.features.utils.DataTableConverter;
 import fr.socgen.features.utils.IsoLocalDateConverter;
 import io.cucumber.datatable.DataTable;
@@ -130,10 +130,10 @@ public class StepDefinitions {
   @Then("the following operations are listed on the statement of account {string} :")
   public void then_following_operations_are_listed_on_the_statement_of_account(
       String accountNumber, DataTable dataTable) {
-    final List<AccountStatementData> expectedAccountStatementData =
-        DataTableConverter.convertToAccountStatementDataList(dataTable);
+    final List<AccountStatementOperationData> expected =
+        DataTableConverter.convertToAccountStatementOperationDataList(dataTable);
 
-    final List<AccountStatementData> actual =
+    final List<AccountStatementOperationData> actual =
         accountRepository
             .getAccount(accountNumber)
             .getStatements()
@@ -143,12 +143,13 @@ public class StepDefinitions {
             .map(this::convertToAccountStatementData)
             .toList();
 
-    assertArrayEquals(expectedAccountStatementData.toArray(), actual.toArray());
+    assertArrayEquals(expected.toArray(), actual.toArray());
   }
 
-  private AccountStatementData convertToAccountStatementData(OperationEntity operationEntity) {
+  private AccountStatementOperationData convertToAccountStatementData(
+      OperationEntity operationEntity) {
     String operationLabel = operationEntity.getAmount() > 0 ? "DEPOSIT" : "WITHDRAWAL";
-    return new AccountStatementData(
+    return new AccountStatementOperationData(
         operationEntity.getDateTime(), operationLabel, Math.abs(operationEntity.getAmount()));
   }
 

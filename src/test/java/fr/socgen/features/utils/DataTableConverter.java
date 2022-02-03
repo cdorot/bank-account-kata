@@ -10,16 +10,20 @@ public final class DataTableConverter {
 
   private DataTableConverter() {}
 
-  public static List<AccountStatementData> convertToAccountStatementDataList(DataTable dataTable) {
-    return dataTable.entries().stream().map(DataTableConverter::mapToAccountStatementData).toList();
+  public static List<AccountStatementOperationData> convertToAccountStatementOperationDataList(
+      DataTable dataTable) {
+    return dataTable.entries().stream()
+        .map(DataTableConverter::mapToAccountStatementOperationData)
+        .toList();
   }
 
-  private static AccountStatementData mapToAccountStatementData(Map<String, String> map) {
+  private static AccountStatementOperationData mapToAccountStatementOperationData(
+      Map<String, String> map) {
     final LocalDateTime dateTime =
         IsoLocalDateConverter.getDateTimeFromIsoLocalDateString(map.get("date"));
     final String operation = map.get("operation");
     final long amount = Long.parseLong(map.get("amount"));
 
-    return new AccountStatementData(dateTime, operation, amount);
+    return new AccountStatementOperationData(dateTime, operation, amount);
   }
 }
