@@ -41,7 +41,7 @@ public class AccountSpiImpl implements AccountSpi {
   }
 
   @Override
-  public void addAcountStatement(String accountNumber, AccountStatement accountStatement) {
+  public void addAccountStatement(String accountNumber, AccountStatement accountStatement) {
     accountRepository.addAccountStatement(
         accountNumber,
         AccountStatementEntityMapper.INSTANCE.mapToAccountStatementEntity(accountStatement));

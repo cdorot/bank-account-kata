@@ -26,15 +26,12 @@ public class AccountRepository {
   public void addAccount(String accountNumber, String holder, long initialDeposit) {
     requireAccountDoesNotExists(accountNumber);
 
-    final AccountEntity accountEntity =
-        new AccountEntity().setNumber(accountNumber).setHolder(holder);
+    accountEntities.put(
+        accountNumber, new AccountEntity().setNumber(accountNumber).setHolder(holder));
 
     if (initialDeposit > 0) {
-      accountEntity.addOperation(
-          new OperationEntity().setAmount(initialDeposit).setDateTime(LocalDateTime.now()));
+      addOperation(accountNumber, initialDeposit);
     }
-
-    accountEntities.put(accountNumber, accountEntity);
   }
 
   public void addOperation(String accountNumber, long amount) {

@@ -42,7 +42,7 @@ public class AccountService {
     final AccountStatement accountStatement =
         new AccountStatement().setDate(date).setBalance(balance).setOperation(operations);
 
-    accountSpi.addAcountStatement(accountNumber, accountStatement);
+    accountSpi.addAccountStatement(accountNumber, accountStatement);
 
     return accountStatement;
   }

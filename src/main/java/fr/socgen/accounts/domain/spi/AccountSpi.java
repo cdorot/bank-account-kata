@@ -16,5 +16,5 @@ public interface AccountSpi {
 
   List<Operation> getOperationsPerformedBeforeDate(String accountNumber, LocalDate date);
 
-  void addAcountStatement(String accountNumber, AccountStatement accountStatement);
+  void addAccountStatement(String accountNumber, AccountStatement accountStatement);
 }
