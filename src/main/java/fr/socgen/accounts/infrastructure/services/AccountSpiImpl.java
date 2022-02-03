@@ -10,7 +10,6 @@ import fr.socgen.accounts.infrastructure.repositories.AccountRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AccountSpiImpl implements AccountSpi {
 
@@ -37,7 +36,7 @@ public class AccountSpiImpl implements AccountSpi {
   public List<Operation> getOperationsPerformedBeforeDate(String accountNumber, LocalDate date) {
     return accountRepository.getOperationsPerformedBeforeDate(accountNumber, date).stream()
         .map(OperationEntityMapper.INSTANCE::mapToOperation)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Override

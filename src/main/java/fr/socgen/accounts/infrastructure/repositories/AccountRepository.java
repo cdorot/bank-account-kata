@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class AccountRepository {
 
@@ -48,7 +47,7 @@ public class AccountRepository {
       String accountNumber, LocalDate date) {
     return accountEntities.get(accountNumber).getOperations().stream()
         .filter(operationEntity -> operationEntity.getDateTime().isBefore(date.atStartOfDay()))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public void addAccountStatement(
